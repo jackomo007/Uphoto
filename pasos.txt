@@ -1,0 +1,4 @@
+expo init UPhoto 
+npm install react-navigation-stack
+npm install --save-dev eslint babel-eslint prettier-eslint
+./node_modules/.bin/eslint --init
