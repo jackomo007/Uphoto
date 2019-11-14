@@ -1,5 +1,8 @@
 import React from 'react';
-import RoutesAuth from './components/auth/routes';
+import {Provider} from 'react-redux';
+import RoutesGuest from './components/guest/routes';
+import Store from './store/Store'
+
 
 export default class App extends React.Component {
   constructor() {
@@ -8,7 +11,9 @@ export default class App extends React.Component {
   }
   render(){
     return (
-      <RoutesAuth />
+      <Provider store={Store}>
+        <RoutesGuest />
+      </Provider>
     );
   }
 }
