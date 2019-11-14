@@ -1,10 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
 import { Field, reduxForm} from 'redux-form';
-import { auth } from '../../../store/Services/Firebase'
 
 const fieldName = (props) => {
-    console.log('inputs');
     return (
         <View style={styles.textInput}>
             <TextInput 
@@ -57,7 +55,6 @@ const validate = (values) => {
 }
 
 const SignUpForm = (props) => {
-    console.log('SignUpForm')
     return(
         <View>
             <Field name="name" component={fieldName} ph='Name' />
@@ -68,21 +65,6 @@ const SignUpForm = (props) => {
             title="Register"
             onPress={props.handleSubmit(
                 props.register,
-                // (values)=>{
-                // console.log(values);
-                // auth.createUserWithEmailAndPassword(values.email, values.password)
-                // .then((success) => {
-                //     console.log(success);
-                // })
-                // .catch(function(error) {
-                //     // Handle Errors here.
-                //     var errorCode = error.code;
-                //     var errorMessage = error.message;
-                //     console.log(errorCode);
-                //     console.log(errorMessage);
-                //     // ...
-                //   });
-                // }
             )}
             />
         </View>
