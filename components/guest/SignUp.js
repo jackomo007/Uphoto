@@ -1,12 +1,16 @@
 import React from 'react';
 import { StyleSheet, View, Text, Button, TextInput } from 'react-native';
 import {connect} from 'react-redux';
+import {actionRegister, actionLoadImageSignUp, actionCleanImageSignUp} from '../../store/Actions';
 import SignUpForm from './Form/SignUpForm';
+import ImageUpload from '../ImageUpload';
+import CONSTANTS from '../../store/Constants';
 
 class SignUp extends React.Component {
-
+    componentWillMount() {
+        this.props.cleanImage();
+    }
     registerUser = (values) => {
-        console.log(values);
         this.props.register(values);
     };
 
@@ -14,10 +18,10 @@ class SignUp extends React.Component {
         title: 'Sign Up',
     };
     render() {
-    console.log(this.props.numero)
     const { navigation } = this.props;
     return (
       <View style={ styles.container}>
+        <ImageUpload image={this.props.image.image} load={this.props.loadImage} />
         <SignUpForm register={this.registerUser}/>
         <Button 
         title='SignIn'
@@ -29,7 +33,7 @@ class SignUp extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
+const styles = StyleSheet.create({ 
     container: {
         flex: 1, 
         justifyContent: 'center',
@@ -38,12 +42,19 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
-        numero: state.reducerPrueba
+        numero: state.reducerPrueba,
+        image: state.reducerImageSingUp,
 });
 
 const mapDispatchToProps = (dispatch) => ({
     register: (values) => {
-        dispatch({type: 'REGISTER', datos: values}); 
+        dispatch(values => (actionRegister(values))); 
+    },
+    loadImage: (image) => {
+        dispatch(actionLoadImageSignUp(image)); 
+    },
+    cleanImage: () => {
+        dispatch(actionCleanImageSignUp()); 
     },
 });
 

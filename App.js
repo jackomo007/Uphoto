@@ -1,6 +1,6 @@
 import React from 'react';
 import {Provider} from 'react-redux';
-import RoutesGuest from './components/guest/routes';
+import Selector from './RouterSelector';
 import Store from './store/Store'
 
 
@@ -12,7 +12,7 @@ export default class App extends React.Component {
   render(){
     return (
       <Provider store={Store}>
-        <RoutesGuest />
+        <Selector />
       </Provider>
     );
   }

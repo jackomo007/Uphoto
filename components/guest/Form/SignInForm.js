@@ -3,7 +3,6 @@ import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
 import { Field, reduxForm} from 'redux-form';
 
 const fieldName = (props) => {
-    console.log(props);
     return (
         <View style={styles.textInput}>
             <TextInput 
@@ -42,16 +41,13 @@ const validate = (values) => {
 }
 
 const SignInForm = (props) => {
-    console.log(props)
     return(
         <View>
             <Field name="email" component={fieldName} ph='Email' />
             <Field name="password" component={fieldName} ph='******' />
             <Button 
             title="Login"
-            onPress={props.handleSubmit((values)=>{
-                console.log(values);
-            })}
+            onPress={props.handleSubmit(props.login)}
             />
         </View>
     );

@@ -1,9 +1,13 @@
 import React from 'react';
 import { StyleSheet, View, Text, Button } from 'react-native';
+import {connect} from 'react-redux';
+import {actionLogin} from '../../store/Actions';
 import SignInForm from './Form/SignInForm';
 
-
-export default class SignIn extends React.Component {
+class SignIn extends React.Component {
+    singInUser = (values) => {
+      this.props.login(values)
+    };
     static navigationOptions = {
         title: 'Sign In',
     };
@@ -11,7 +15,7 @@ export default class SignIn extends React.Component {
     const { navigation } = this.props;
     return (
       <View style={ styles.container}>
-        <SignInForm />
+        <SignInForm login={this.singInUser}/>
         <Button 
         title='Go to Sign Up'
         onPress={() => {
@@ -28,4 +32,20 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: 16,
     }
-})
+});
+
+const mapStateToProps = (state) => {
+  return {
+    prop: state.prop
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: (datos) => {
+      dispatch(actionLogin(datos));
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn)
