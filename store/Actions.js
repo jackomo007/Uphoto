@@ -19,7 +19,7 @@ export const actionSession = user => ({
     user,
 });
 
-export const actionLoadImageSignUp = (image) => ({
+export const actionLoadImageSignUp = image => ({
     type: CONSTANTS.LOAD_IMG_SINGUP,
     image,
 });

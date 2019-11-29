@@ -5,6 +5,8 @@ const CONSTANTS = {
     SESSION: 'SESSION',
     CLEAN_IMG_SINGUP : 'CLEAN_IMG_SINGUP',
     LOAD_IMG_SINGUP : 'LOAD_IMG_SINGUP',
+    CLOUDINARY_NAME: 'https://api.cloudinary.com/v1_1/dvm6sgg1h/image/upload',
+    CLOUDINARY_PRESET: 'qpthxurl',
 };
 
 export default CONSTANTS;

@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, Button, TextInput } from 'react-native';
 import {connect} from 'react-redux';
+import {blur, change} from 'redux-form';
 import {actionRegister, actionLoadImageSignUp, actionCleanImageSignUp} from '../../store/Actions';
 import SignUpForm from './Form/SignUpForm';
 import ImageUpload from '../ImageUpload';
@@ -22,7 +23,7 @@ class SignUp extends React.Component {
     return (
       <View style={ styles.container}>
         <ImageUpload image={this.props.image.image} load={this.props.loadImage} />
-        <SignUpForm register={this.registerUser}/>
+        <SignUpForm register={this.registerUser} image={this.props.image.image}/>
         <Button 
         title='SignIn'
         onPress={() => {
@@ -46,12 +47,13 @@ const mapStateToProps = (state) => ({
         image: state.reducerImageSingUp,
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
     register: (values) => {
-        dispatch(values => (actionRegister(values))); 
+        dispatch(actionRegister(values)); 
     },
     loadImage: (image) => {
         dispatch(actionLoadImageSignUp(image)); 
+        dispatch(blur('SignUpForm','image',Date.now()));
     },
     cleanImage: () => {
         dispatch(actionCleanImageSignUp()); 
