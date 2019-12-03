@@ -36,12 +36,24 @@ const reducerImageSingUp = (state= {image: null}, action) => {
     }
 };
 
+const reducerImagePublication = (state= {image: null}, action) => {
+    switch (action.type) {
+        case CONSTANTS.LOAD_IMG_PUBLICATION:
+            return {image: action.image};
+        case CONSTANTS.CLEAN_IMG_PUBLICATION:
+            return {image: null};
+        default:
+            return state;
+    }
+};
+
 const sagaMiddleware = createSagaMiddleware();
 
 const reducers = combineReducers({
     reducerImageSingUp,
     reducerSession,
     reducerPrueba,
+    reducerImagePublication,
     form,
 });
 

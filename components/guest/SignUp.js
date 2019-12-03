@@ -1,11 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button, TextInput } from 'react-native';
+import { StyleSheet, View, Button } from 'react-native';
 import {connect} from 'react-redux';
-import {blur, change} from 'redux-form';
+import {blur} from 'redux-form';
 import {actionRegister, actionLoadImageSignUp, actionCleanImageSignUp} from '../../store/Actions';
 import SignUpForm from './Form/SignUpForm';
 import ImageUpload from '../ImageUpload';
-import CONSTANTS from '../../store/Constants';
 
 class SignUp extends React.Component {
     componentWillMount() {

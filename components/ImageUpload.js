@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { Button, Image, View, TouchableOpacity } from 'react-native';
+import { Image, View, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import ExpoConstants from 'expo-constants';
-import * as Permissions from 'expo-permissions';
 
 const ImageUpload = (props) =>{
   const pickImage = async () => {
@@ -13,21 +11,21 @@ const ImageUpload = (props) =>{
         quality: 1
       });
     
-      console.log(result);
-    
       if (!result.cancelled) {
         props.load(result);
       }
     };
+    console.log(props.radius);
+    const radius = {borderRadius: props.radius?0:100};
   return (
-    <View style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}>
+    <View style={{ alignItems: 'center', justifyContent: 'center' }}>
       <TouchableOpacity onPress={pickImage}>
         {
           props.image ?
           <Image source={{  uri: props.image.uri }} 
-        style={{ width: 160, height: 160, borderRadius: 80 }}/> :
+        style={{ width: 200, height: 200, ...radius }}/> :
         <Image source={require('../assets/image.png')} 
-        style={{ width: 160, height: 160, borderRadius: 80 }}/>
+        style={{ width: 200, height: 200, ...radius }}/>
         }
         
       </TouchableOpacity>

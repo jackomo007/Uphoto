@@ -9,6 +9,7 @@ import SearchScreen from './Search';
 import PublicationScreen from './Publication';
 import CommentsScreen from './Comments';
 import TabFollow from './TabFollow';
+import PickFromGalleryScreen from './PickFromGallery';
 
 const StackHome = createStackNavigator({
   Home: { 
@@ -97,10 +98,35 @@ StackFollow.navigationOptions = ({ navigation }) => {
   };
 };
 
+const StackAdd = createStackNavigator({
+  Add: { 
+    screen:AddScreen,
+    navigationOptions:{
+      header:null
+    }
+  },
+  Selection: {
+      screen:PickFromGalleryScreen,
+  }
+});
+
+StackAdd.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  let sizeNavigation = navigation.state.routes.length;
+  if (navigation.state.index > 0 && (navigation.state.routes[sizeNavigation - 1].routeName === "Comments" || navigation.state.routes[sizeNavigation - 1].routeName === "Selection")) {
+    tabBarVisible = false;
+  }else{
+    tabBarVisible = true;
+  }
+  return {
+    tabBarVisible,
+  };
+};
+
 export default createAppContainer(createBottomTabNavigator(
   {
     Home: { screen: StackHome },
-    Add: { screen: AddScreen },
+    Add: { screen: StackAdd },
     Follow: { screen: StackFollow },
     Profile: { screen: ProfileScreen },
     Search: { screen: StackSearch },

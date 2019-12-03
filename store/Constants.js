@@ -7,6 +7,8 @@ const CONSTANTS = {
     LOAD_IMG_SINGUP : 'LOAD_IMG_SINGUP',
     CLOUDINARY_NAME: 'https://api.cloudinary.com/v1_1/dvm6sgg1h/image/upload',
     CLOUDINARY_PRESET: 'qpthxurl',
+    LOAD_IMG_PUBLICATION: 'LOAD_IMG_PUBLICATION',
+    CLEAN_IMG_PUBLICATION: 'CLEAN_IMG_PUBLICATION',
 };
 
 export default CONSTANTS;
