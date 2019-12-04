@@ -36,7 +36,6 @@ const mapDispatchToProps = dispatch => ({
     authentication:() => {
         auth.onAuthStateChanged(function(user) {
             if (user) {
-                console.log(user);
                 dispatch(actionSession(user));
             } else {
                 console.log('Session doesnt exist!');

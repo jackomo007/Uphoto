@@ -47,13 +47,23 @@ const reducerImagePublication = (state= {image: null}, action) => {
     }
 };
 
+const reducerPublicationsDownloaded = (state = [], action) => {
+    switch (action.type) {
+        case CONSTANTS.ADD_PUBLICATION_STORE:
+            return [...state, action.publications];
+        default:
+            return state;
+    }
+};
+
 const sagaMiddleware = createSagaMiddleware();
 
 const reducers = combineReducers({
+    reducerPublicationsDownloaded,
+    reducerImagePublication,
     reducerImageSingUp,
     reducerSession,
     reducerPrueba,
-    reducerImagePublication,
     form,
 });
 

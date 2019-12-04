@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {blur} from 'redux-form';
-import {actionLoadImagePublication} from '../../store/Actions';
+import {actionLoadImagePublication, actionUploadPublication, actionCleanImagePublication} from '../../store/Actions';
 import { Button, View, StyleSheet, Text } from 'react-native';
 import ImageUpload from "../ImageUpload";
 import PickFromGalleryForm from './PickFromGalleryForm';
@@ -10,6 +10,11 @@ class PickFromGallery extends React.Component {
   static navigationOptions = {
     title: 'Pick Up a Photo!',
   };
+
+  componentWillUnmount(){
+    this.props.cleanImage();
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -23,7 +28,9 @@ class PickFromGallery extends React.Component {
         <View styles={styles.text}>
           <PickFromGalleryForm 
             image={this.props.image.image} 
-            register={(values) => {console.log(values);}}
+            register={(values) => {
+              this.props.uploadPublication(values);
+            }}
           />
         </View>
         <View styles={styles.button}>
@@ -51,6 +58,12 @@ const mapDispatchToProps = dispatch => ({
   loadImage: (image) => {
     dispatch(actionLoadImagePublication(image));
     dispatch(blur('PickFromGalleryForm','image',Date.now()));
+  },
+  uploadPublication: (values) => {
+    dispatch(actionUploadPublication(values));
+  },
+  cleanImage: () => {
+    dispatch(actionCleanImagePublication());
   },
 });
 

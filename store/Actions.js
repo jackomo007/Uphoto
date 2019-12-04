@@ -36,3 +36,17 @@ export const actionLoadImagePublication = image => ({
 export const actionCleanImagePublication = () => ({
     type: CONSTANTS.CLEAN_IMG_PUBLICATION,
 });
+
+export const actionUploadPublication = values => ({
+    type: CONSTANTS.UPLOAD_PUBLICATION,
+    values,
+});
+
+export const actionDownloadPublication = () => ({
+    type: CONSTANTS.DOWNLOAD_PUBLICATION,
+});
+
+export const actionAddPublicationStore = publications => ({
+    type: CONSTANTS.ADD_PUBLICATION_STORE,
+    publications
+});

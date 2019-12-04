@@ -15,7 +15,6 @@ const ImageUpload = (props) =>{
         props.load(result);
       }
     };
-    console.log(props.radius);
     const radius = {borderRadius: props.radius?0:100};
   return (
     <View style={{ alignItems: 'center', justifyContent: 'center' }}>

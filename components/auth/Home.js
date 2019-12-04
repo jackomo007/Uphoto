@@ -1,8 +1,15 @@
 import React from 'react';
 import { View, StyleSheet, Text,  Button } from 'react-native';
+import { connect } from 'react-redux';
+import { actionDownloadPublication } from '../../store/Actions';
 
 class Home extends React.Component {
+  componentDidMount(){
+    this.props.downloadPublication();
+  }
   render() {
+    console.log(this.props.publications);
+    
     const { navigation } = this.props;
     return (
       <View style={styles.container}>
@@ -29,4 +36,14 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Home;
+const mapStateToProps = state => ({
+  publications: state.reducerPublicationsDownloaded,
+});
+
+const mapDispatchToProps = dispatch => ({
+  downloadPublication: () => {
+    dispatch(actionDownloadPublication());
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

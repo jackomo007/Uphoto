@@ -1,6 +1,7 @@
-import { takeEvery, call, select } from 'redux-saga/effects';
+import { takeEvery, call, select, put } from 'redux-saga/effects';
 import { auth, dB } from '../Services/Firebase';
 import CONTANTS from '../Constants';
+import { actionAddPublicationStore } from '../Actions';
 
 const registerInFire = values => auth
 .createUserWithEmailAndPassword(values.email, values.password)
@@ -67,7 +68,66 @@ function* sagaLogin(values){
     }
 }
 
+const writeFire = ({width, height, secure_url, uid}, text = "") => dB
+.ref('publications/')
+.push({
+    width,
+    height,
+    secure_url,
+    uid,
+    text,
+})
+.then(response => response);
+
+const makeAuthorPublications = ({ uid, key}) => dB
+.ref('author-publications/'+uid)
+.update({[key]: true})
+.then(response => response);
+
+function* sagaUploadPublication({values}) {
+    try {
+        const image = yield select(state => state.reducerImagePublication);
+        const user = yield select(state => state.reducerSession);
+        const {uid} = user;
+        const resultPhoto = yield call(registerPictureCloudinary, image);
+        const{width, height, secure_url} = resultPhoto;
+        const paramsPhoto = {width, height, secure_url,uid};
+        const saveInFire = yield call(writeFire, paramsPhoto, values.text);
+        const {key} = saveInFire;
+        const paramsAuthorPublications = { uid, key};
+        const resultmakeAuthorPublications = yield call(makeAuthorPublications, paramsAuthorPublications,);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const downloadPublication = () => dB
+.ref('publications/')
+.once('value')
+.then((snapshot)=> {
+    let publications = [];
+        snapshot.forEach((childSnapshot) => {
+            const {key} = childSnapshot;
+            const publication = childSnapshot.val();
+            publication.key = key;
+            publications.push(publication);
+        });
+        return publications;
+    }
+);
+
+function* sagaDownloadPublication() {
+    try {
+        const publications = yield call(downloadPublication);
+        yield put(actionAddPublicationStore(publications));
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export default function* functionPrimary(){
     yield takeEvery(CONTANTS.REGISTER, sagaRegister);
     yield takeEvery(CONTANTS.LOGIN, sagaLogin);
+    yield takeEvery(CONTANTS.UPLOAD_PUBLICATION, sagaUploadPublication);
+    yield takeEvery(CONTANTS.DOWNLOAD_PUBLICATION, sagaDownloadPublication);
 }

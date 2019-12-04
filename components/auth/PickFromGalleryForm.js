@@ -12,6 +12,7 @@ const fieldName = (props) => {
                 keyboardType="default"
                 autoCapitalize='none'
                 onBlur={props.input.onBlur}
+                multiline 
             />
             <View style={styles.linea} />
             {props.meta.touched && props.meta.error && <Text style={styles.errors}>{props.meta.error}</Text>}
@@ -31,7 +32,7 @@ const validate = (values,props) => {
         errors.image = 'image required';
     }
 
-    if(values.text && !values.text.length > 140){
+    if(values.text && values.text.length > 140){
         errors.text = 'must be less than 140 characters';
     }
 
@@ -59,10 +60,6 @@ const styles = StyleSheet.create({
     },
     textInput: {
         marginBottom: 16,
-    },
-    linea: {
-        backgroundColor: '#2196f3',
-        height: 2,
     },
     errors: {
         color: '#bf405f',
