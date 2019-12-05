@@ -1,19 +1,24 @@
 import React from 'react';
-import { View, StyleSheet, Text,  Button } from 'react-native';
+import { View, StyleSheet, Text,  Button, FlatList, } from 'react-native';
 import { connect } from 'react-redux';
-import { actionDownloadPublication } from '../../store/Actions';
-
+import { actionDownloadPublication, actionAddAuthorsStore } from '../../store/Actions';
+import Publication from './Publication';
 class Home extends React.Component {
   componentDidMount(){
     this.props.downloadPublication();
   }
   render() {
-    console.log(this.props.publications);
-    
-    const { navigation } = this.props;
+    const { navigation, authors } = this.props;
     return (
       <View style={styles.container}>
-        <Text style={{color: 'white'}}>Home!</Text>
+        <FlatList 
+          data={this.props.publications}
+          renderItem={({item,index}) => <Publication item={item} author={authors[index]}/>}
+          ItemSeparatorComponent={() => (
+            <View style={styles.separator }/>
+          )}
+        />
+        {/* <Text style={{color: 'white'}}>Home!</Text>
         <Button 
         title='Author'
         onPress={()=>{navigation.navigate('Author')}}
@@ -21,7 +26,7 @@ class Home extends React.Component {
         <Button 
         title='Comments'
         onPress={()=>{navigation.navigate('Comments')}}
-        />
+        /> */}
       </View>
     );
   }
@@ -32,12 +37,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000000',
+    // backgroundColor: '#000000',
+  },
+  separator: {
+    borderWidth: 2,
+    borderColor: '#C0C0C0',
   }
 });
 
 const mapStateToProps = state => ({
   publications: state.reducerPublicationsDownloaded,
+  authors: state.reducerAuthorsDownloaded,
 });
 
 const mapDispatchToProps = dispatch => ({

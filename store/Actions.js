@@ -50,3 +50,20 @@ export const actionAddPublicationStore = publications => ({
     type: CONSTANTS.ADD_PUBLICATION_STORE,
     publications
 });
+
+export const actionAddAuthorsStore = authors => ({
+    type: CONSTANTS.ADD_AUTHOR_STORE,
+    authors
+});
+
+export const actionSuccessPublicationUploaded = () => ({
+    type: CONSTANTS.SUCCESS_PUBLICATION_UPLOADED,
+});
+
+export const actionErrorPublicationUploaded = () => ({
+    type: CONSTANTS.ERROR_PUBLICATION_UPLOADED,
+});
+
+export const actionCleanPublicationUploaded = () => ({
+    type: CONSTANTS.CLEAN_PUBLICATION_UPLOADED,
+});

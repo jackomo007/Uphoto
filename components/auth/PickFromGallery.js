@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {blur} from 'redux-form';
-import {actionLoadImagePublication, actionUploadPublication, actionCleanImagePublication} from '../../store/Actions';
-import { Button, View, StyleSheet, Text } from 'react-native';
+import {actionLoadImagePublication, actionUploadPublication, actionCleanImagePublication, actionCleanPublicationUploaded} from '../../store/Actions';
+import { Button, View, StyleSheet, Text, Alert } from 'react-native';
 import ImageUpload from "../ImageUpload";
 import PickFromGalleryForm from './PickFromGalleryForm';
 
@@ -13,6 +13,27 @@ class PickFromGallery extends React.Component {
 
   componentWillUnmount(){
     this.props.cleanImage();
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(this.props.statePublicationUploaded !== nextProps.statePublicationUploaded){
+      switch (nextProps.statePublicationUploaded) {
+        case 'SUCCESS':
+          Alert.alert('Success:', 'Photo published successfully!', [{text:'Ok', onPress: () => {
+            this.props.cleanStatePublicationUploaded();
+            this.props.navigation.goBack();
+          }}]);
+          break;
+        case 'ERROR':
+            Alert.alert('Whoops:', 'Something gone wrong, try again!', [{text:'Retry', onPress: () => {
+              this.props.cleanStatePublicationUploaded();
+              this.props.navigation.goBack();
+            }}]);
+        break;
+        default:
+          break;
+      }
+    }
   }
 
   render() {
@@ -52,6 +73,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   image: state.reducerImagePublication,
+  statePublicationUploaded: state.reducerPublicationUploaded.status,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -64,6 +86,9 @@ const mapDispatchToProps = dispatch => ({
   },
   cleanImage: () => {
     dispatch(actionCleanImagePublication());
+  },
+  cleanStatePublicationUploaded: () => {
+    dispatch(actionCleanPublicationUploaded());
   },
 });
 

@@ -1,7 +1,7 @@
-import { takeEvery, call, select, put } from 'redux-saga/effects';
+import { takeEvery, call, select, put, all } from 'redux-saga/effects';
 import { auth, dB } from '../Services/Firebase';
 import CONTANTS from '../Constants';
-import { actionAddPublicationStore } from '../Actions';
+import { actionAddPublicationStore, actionAddAuthorsStore, actionSuccessPublicationUploaded, actionErrorPublicationUploaded } from '../Actions';
 
 const registerInFire = values => auth
 .createUserWithEmailAndPassword(values.email, values.password)
@@ -47,7 +47,7 @@ function* sagaRegister(values){
 
         const register = yield call(registerInFire, values.datos);
         const uid =  register.user.uid;
-        const email =  values.datos.name;
+        const email =  values.datos.email;
         const password =  values.datos.password;
         const name = values.datos.name;
         yield call(registerInDB, { uid, email, name, password, photoURL});
@@ -86,6 +86,7 @@ const makeAuthorPublications = ({ uid, key}) => dB
 
 function* sagaUploadPublication({values}) {
     try {
+        // throw new Error('Opss... Houston we have a problem');
         const image = yield select(state => state.reducerImagePublication);
         const user = yield select(state => state.reducerSession);
         const {uid} = user;
@@ -96,8 +97,10 @@ function* sagaUploadPublication({values}) {
         const {key} = saveInFire;
         const paramsAuthorPublications = { uid, key};
         const resultmakeAuthorPublications = yield call(makeAuthorPublications, paramsAuthorPublications,);
+        yield put(actionSuccessPublicationUploaded());
     } catch (error) {
         console.log(error);
+        yield put(actionErrorPublicationUploaded());
     }
 }
 
@@ -116,9 +119,16 @@ const downloadPublication = () => dB
     }
 );
 
+const downloadAuthor = uid => dB
+.ref('users/'+uid)
+.once('value')
+.then((snapshot) => snapshot.val());
+
 function* sagaDownloadPublication() {
     try {
         const publications = yield call(downloadPublication);
+        authors= yield all(publications.map(publication => call(downloadAuthor, publication.uid)));
+        yield put(actionAddAuthorsStore(authors));
         yield put(actionAddPublicationStore(publications));
     } catch (error) {
         console.log(error);

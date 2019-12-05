@@ -50,7 +50,29 @@ const reducerImagePublication = (state= {image: null}, action) => {
 const reducerPublicationsDownloaded = (state = [], action) => {
     switch (action.type) {
         case CONSTANTS.ADD_PUBLICATION_STORE:
-            return [...state, action.publications];
+            return [...state, ...action.publications];
+        default:
+            return state;
+    }
+};
+
+const reducerAuthorsDownloaded = (state = [], action) => {
+    switch (action.type) {
+        case CONSTANTS.ADD_AUTHOR_STORE:
+            return [...state, ...action.authors];
+        default:
+            return state;
+    }
+};
+
+const reducerPublicationUploaded = (state = { status: null }, action) => {
+    switch (action.type) {
+        case CONSTANTS.SUCCESS_PUBLICATION_UPLOADED:
+            return {status: 'SUCCESS'};
+        case CONSTANTS.ERROR_PUBLICATION_UPLOADED:
+        return {status: 'ERROR'};
+        case CONSTANTS.CLEAN_PUBLICATION_UPLOADED:
+        return {status: null};
         default:
             return state;
     }
@@ -59,6 +81,8 @@ const reducerPublicationsDownloaded = (state = [], action) => {
 const sagaMiddleware = createSagaMiddleware();
 
 const reducers = combineReducers({
+    reducerPublicationUploaded,
+    reducerAuthorsDownloaded,
     reducerPublicationsDownloaded,
     reducerImagePublication,
     reducerImageSingUp,

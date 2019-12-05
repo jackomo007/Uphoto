@@ -1,4 +1,13 @@
-expo init UPhoto 
-npm install react-navigation-stack
+npm install -g expo-cli
+npm install expo-cli --global
 npm install --save-dev eslint babel-eslint prettier-eslint
-./node_modules/.bin/eslint --init
+npm install --save react-navigation
+npm i -s react-native-gesture-handler
+npm install --save-dev eslint babel-eslint prettier-eslint
+npm install react-navigation-stack
+npm cache clean --force && npm install
+npm install --save redux react-redux
+npm install --save redux-form
+npm install --save firebase
+npm install --save redux-saga
+npm install -g react-devtools
