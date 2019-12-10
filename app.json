@@ -1,17 +1,33 @@
 {
-  "name": "UPhoto",
-  "displayName": "UPhoto",
   "expo": {
     "name": "UPhoto",
-    "slug": "expo-template-bare",
-    "privacy": "unlisted",
+    "description": "Inspired by Instagram",
+    "slug": "UPhoto",
+    "privacy": "public",
     "sdkVersion": "35.0.0",
-    "version": "1.0.0",
-    "entryPoint": "node_modules/expo/AppEntry.js",
     "platforms": [
       "ios",
       "android",
       "web"
-    ]
+    ],
+    "version": "0.5.0",
+    "entryPoint": "./Principal.js",
+    "orientation": "portrait",
+    "icon": "./assets/image.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "backgroundColor": "#43CBFF",
+      "resizeMode": "cover"
+    },
+    "ios": {
+      "bundleIdentifier": "com.jackomo47.UPhoto"
+    },
+    "android": {
+      "package": "com.jackomo47.UPhoto"
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#ffffff"
+    },
+    "githubUrl": "https://github.com/jackomo007/Uphoto"
   }
 }
