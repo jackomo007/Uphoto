@@ -1,45 +1,65 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button, Image, Dimensions, } from 'react-native';
+import { View, StyleSheet, Text, Button, Image, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Slider from './Slider';
 
 class Publication extends React.Component {
   
   render() {
     
-    const { navigation, item, author } = this.props;
-    const {width} = Dimensions.get('window');
-    const factor = item.width / width;
-    const height = item.height / factor;
-    return (
-      <View>
-        <View style={styles.header}>
-          <Image
-            source={{ uri: author.photoURL }} 
-            style={{ width: 48, height: 48, borderRadius: 24 }}
+    const { navigation, item, author, user, profile } = this.props;
+    
+    if(profile === false){
+      const {width} = Dimensions.get('window');
+      const factor = item.width / width;
+      const height = item.height / factor;
+      return (
+        <View>
+          <View style={styles.header}>
+            <Image
+              source={{ uri: author.photoURL }} 
+              style={{ width: 48, height: 48, borderRadius: 24 }}
+            />
+            <Text style={{ marginTop:10, marginLeft:5, }}>{author.name}</Text>
+          </View>
+          <Image 
+            source={{ uri: item.secure_url }}
+            style={{ width, height }}
           />
-          <Text style={{ marginTop:10, marginLeft:5, }}>{author.name}</Text>
+          <View style={styles.footer}>
+          <View style={styles.icons}>
+            <Ionicons name="ios-heart-empty" size={30} color="#2196f3" />
+            <Ionicons style={{ marginLeft:10, }} name="ios-chatbubbles" size={30} color="#2196f3" />
+          </View>
+          <View>
+            <Text style={styles.text}>{item.text}</Text>
+          </View>
+            <Text style={{ paddingHorizontal: 10, }}>Comments</Text>
+          </View>
+          {/* <Text style={{color: 'white'}}>Publication!</Text>
+          <Button 
+          title='Comments'
+          onPress={()=>{navigation.navigate('Comments')}}
+          /> */}
         </View>
+        );
+    }else{
+      if (author.email === user) {
+      const factor =Dimensions.get('window');
+      const width = factor.width /3;
+      const height = factor.width /3;
+      return (
+      <View>
         <Image 
           source={{ uri: item.secure_url }}
           style={{ width, height }}
         />
-        <View style={styles.footer}>
-        <View style={styles.icons}>
-          <Ionicons name="ios-heart-empty" size={30} color="#2196f3" />
-          <Ionicons style={{ marginLeft:10, }} name="ios-chatbubbles" size={30} color="#2196f3" />
-        </View>
-        <View>
-          <Text style={styles.text}>{item.text}</Text>
-        </View>
-          <Text style={{ paddingHorizontal: 10, }}>Comments</Text>
-        </View>
-         {/* <Text style={{color: 'white'}}>Publication!</Text>
-         <Button 
-         title='Comments'
-         onPress={()=>{navigation.navigate('Comments')}}
-         /> */}
       </View>
-    );
+      );
+      }else{
+        return null;
+      }
+    }
   }
 }
 

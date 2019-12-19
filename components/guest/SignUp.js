@@ -23,11 +23,11 @@ class SignUp extends React.Component {
       <View style={ styles.container}>
         <ImageUpload image={this.props.image.image} load={this.props.loadImage} />
         <SignUpForm register={this.registerUser} image={this.props.image.image}/>
-        <Button 
+        {/* <Button 
         title='SignIn'
         onPress={() => {
             navigation.goBack();
-        }}/>
+        }}/> */}
       </View>
     );
   }

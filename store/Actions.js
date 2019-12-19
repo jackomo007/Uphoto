@@ -56,6 +56,11 @@ export const actionAddAuthorsStore = authors => ({
     authors
 });
 
+export const actionAddUserStore = user => ({
+    type: CONSTANTS.ADD_USER_STORE,
+    user
+});
+
 export const actionSuccessPublicationUploaded = () => ({
     type: CONSTANTS.SUCCESS_PUBLICATION_UPLOADED,
 });

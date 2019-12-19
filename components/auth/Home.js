@@ -1,19 +1,19 @@
 import React from 'react';
 import { View, StyleSheet, Text,  Button, FlatList, } from 'react-native';
 import { connect } from 'react-redux';
-import { actionDownloadPublication, actionAddAuthorsStore } from '../../store/Actions';
+import { actionDownloadPublication } from '../../store/Actions';
 import Publication from './Publication';
 class Home extends React.Component {
   componentDidMount(){
     this.props.downloadPublication();
   }
   render() {
-    const { navigation, authors } = this.props;
+    const { navigation, authors,user } = this.props;
     return (
       <View style={styles.container}>
         <FlatList 
           data={this.props.publications}
-          renderItem={({item,index}) => <Publication item={item} author={authors[index]}/>}
+          renderItem={({item,index}) => <Publication item={item} author={authors[index]} user={user.email} profile={false}/>}
           ItemSeparatorComponent={() => (
             <View style={styles.separator }/>
           )}
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   publications: state.reducerPublicationsDownloaded,
   authors: state.reducerAuthorsDownloaded,
+  user: state.reducerSession,
 });
 
 const mapDispatchToProps = dispatch => ({

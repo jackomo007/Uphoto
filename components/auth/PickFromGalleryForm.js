@@ -5,7 +5,7 @@ import { Field, reduxForm} from 'redux-form';
 const fieldName = (props) => {
     return (
         <View style={styles.textInput}>
-            <TextInput 
+            <TextInput
                 placeholder={props.ph}
                 onChangeText={props.input.onChange} 
                 value={props.input.value}

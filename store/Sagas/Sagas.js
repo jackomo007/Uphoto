@@ -1,7 +1,7 @@
 import { takeEvery, call, select, put, all } from 'redux-saga/effects';
 import { auth, dB } from '../Services/Firebase';
 import CONTANTS from '../Constants';
-import { actionAddPublicationStore, actionAddAuthorsStore, actionSuccessPublicationUploaded, actionErrorPublicationUploaded } from '../Actions';
+import { actionAddPublicationStore, actionAddAuthorsStore, actionAddUserStore, actionSuccessPublicationUploaded, actionErrorPublicationUploaded } from '../Actions';
 
 const registerInFire = values => auth
 .createUserWithEmailAndPassword(values.email, values.password)
@@ -128,6 +128,8 @@ function* sagaDownloadPublication() {
     try {
         const publications = yield call(downloadPublication);
         authors= yield all(publications.map(publication => call(downloadAuthor, publication.uid)));
+        user = yield select(state => state.reducerSession);
+        yield put(actionAddUserStore(user));
         yield put(actionAddAuthorsStore(authors));
         yield put(actionAddPublicationStore(publications));
     } catch (error) {

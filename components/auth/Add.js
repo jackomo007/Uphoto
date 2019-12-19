@@ -11,7 +11,7 @@ class Add extends React.Component {
         title='Select Photo'
         onPress={()=>{navigation.navigate('Selection')}}
         />
-         <Text style={{color: 'white'}}>Add</Text>
+         <Text style={{color: 'white'}}></Text>
          <Button 
         title='Take a Photo'
         onPress={()=>{navigation.navigate('Selection')}}
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#000000',
+    backgroundColor: '#43CBFF',
   }
 });
 

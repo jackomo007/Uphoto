@@ -10,10 +10,14 @@ import PublicationScreen from './Publication';
 import CommentsScreen from './Comments';
 import TabFollow from './TabFollow';
 import PickFromGalleryScreen from './PickFromGallery';
+import SliderScreen from './Slider';
 
 const StackHome = createStackNavigator({
   Home: { 
     screen:HomeScreen,
+    navigationOptions:{
+      header:null
+    }
   },
   Author: {
       screen:AuthorScreen,
@@ -29,7 +33,7 @@ const StackHome = createStackNavigator({
 StackHome.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;
   let sizeNavigation = navigation.state.routes.length;
-  if (navigation.state.index > 0 && navigation.state.routes[sizeNavigation - 1].routeName === "Comments") {
+  if (navigation.state.index > 0 && (navigation.state.routes[sizeNavigation - 1].routeName === "Comments" || navigation.state.routes[sizeNavigation - 1].routeName === "Selection" || navigation.state.routes[sizeNavigation - 1].routeName === "Slider")) {
     tabBarVisible = false;
   }else{
     tabBarVisible = true;
@@ -42,6 +46,9 @@ StackHome.navigationOptions = ({ navigation }) => {
 const StackSearch = createStackNavigator({
   Search: { 
     screen:SearchScreen,
+    navigationOptions:{
+      header:null
+    }
   },
   Publication:{
       screen:PublicationScreen,
@@ -57,7 +64,7 @@ const StackSearch = createStackNavigator({
 StackSearch.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;
   let sizeNavigation = navigation.state.routes.length;
-  if (navigation.state.index > 0 && navigation.state.routes[sizeNavigation - 1].routeName === "Comments") {
+  if (navigation.state.index > 0 && (navigation.state.routes[sizeNavigation - 1].routeName === "Comments" || navigation.state.routes[sizeNavigation - 1].routeName === "Selection" || navigation.state.routes[sizeNavigation - 1].routeName === "Slider")) {
     tabBarVisible = false;
   }else{
     tabBarVisible = true;
@@ -88,7 +95,7 @@ const StackFollow = createStackNavigator({
 StackFollow.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;
   let sizeNavigation = navigation.state.routes.length;
-  if (navigation.state.index > 0 && navigation.state.routes[sizeNavigation - 1].routeName === "Comments") {
+  if (navigation.state.index > 0 && (navigation.state.routes[sizeNavigation - 1].routeName === "Comments" || navigation.state.routes[sizeNavigation - 1].routeName === "Selection" || navigation.state.routes[sizeNavigation - 1].routeName === "Slider")) {
     tabBarVisible = false;
   }else{
     tabBarVisible = true;
@@ -113,7 +120,32 @@ const StackAdd = createStackNavigator({
 StackAdd.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;
   let sizeNavigation = navigation.state.routes.length;
-  if (navigation.state.index > 0 && (navigation.state.routes[sizeNavigation - 1].routeName === "Comments" || navigation.state.routes[sizeNavigation - 1].routeName === "Selection")) {
+  if (navigation.state.index > 0 && (navigation.state.routes[sizeNavigation - 1].routeName === "Comments" || navigation.state.routes[sizeNavigation - 1].routeName === "Selection" || navigation.state.routes[sizeNavigation - 1].routeName === "Slider")) {
+    tabBarVisible = false;
+  }else{
+    tabBarVisible = true;
+  }
+  return {
+    tabBarVisible,
+  };
+};
+
+const StackProfile = createStackNavigator({
+  Add: { 
+    screen:ProfileScreen,
+    navigationOptions:{
+      header:null
+    }
+  },
+  Slider: {
+      screen:SliderScreen,
+  }
+});
+
+StackProfile.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  let sizeNavigation = navigation.state.routes.length;
+  if (navigation.state.index > 0 && (navigation.state.routes[sizeNavigation - 1].routeName === "Comments" || navigation.state.routes[sizeNavigation - 1].routeName === "Selection" || navigation.state.routes[sizeNavigation - 1].routeName === "Slider")) {
     tabBarVisible = false;
   }else{
     tabBarVisible = true;
@@ -127,8 +159,8 @@ export default createAppContainer(createBottomTabNavigator(
   {
     Home: { screen: StackHome },
     Add: { screen: StackAdd },
-    Follow: { screen: StackFollow },
-    Profile: { screen: ProfileScreen },
+    // Follow: { screen: StackFollow },
+    Profile: { screen: StackProfile },
     Search: { screen: StackSearch },
   },
   {
@@ -139,7 +171,7 @@ export default createAppContainer(createBottomTabNavigator(
         if (routeName === 'Home') {
           iconName = `ios-home${focused ? '' : ''}`;
         } else if (routeName === 'Add') {
-          iconName = `ios-add-circle-outline${focused ? '' : ''}`;
+          iconName = `ios-camera${focused ? '' : ''}`;
         } else if (routeName === 'Follow') {
           iconName = `ios-person-add${focused ? '' : ''}`;
         } else if (routeName === 'Profile') {
@@ -148,14 +180,13 @@ export default createAppContainer(createBottomTabNavigator(
           iconName = `ios-search${focused ? '' : ''}`;
         }
 
-        // You can return any component that you like here! We usually use an
-        // icon component from react-native-vector-icons
-        return <Ionicons name={iconName} size={25} color={tintColor} />;
+        return <Ionicons name={iconName} size={30} color={tintColor} />;
       },
     }),
     tabBarOptions: {
+      showLabel: false,
       activeTintColor: '#2196f3',
-      inactiveTintColor: 'gray',
+      inactiveTintColor: '#B2CFED',
     },
   }
 ));
