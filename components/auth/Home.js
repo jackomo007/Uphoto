@@ -13,7 +13,7 @@ class Home extends React.Component {
       <View style={styles.container}>
         <FlatList 
           data={this.props.publications}
-          renderItem={({item,index}) => <Publication item={item} author={authors[index]} user={user.email} profile={false}/>}
+          renderItem={({item,index}) => <Publication navigation={navigation} item={item} author={authors[index]} user={user.email} profile={false}/>}
           ItemSeparatorComponent={() => (
             <View style={styles.separator }/>
           )}
@@ -26,7 +26,7 @@ class Home extends React.Component {
         <Button 
         title='Comments'
         onPress={()=>{navigation.navigate('Comments')}}
-        /> */}
+        />*/} 
       </View>
     );
   }

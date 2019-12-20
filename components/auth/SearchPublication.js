@@ -13,7 +13,7 @@ class SearchPublication extends React.Component {
     <View>
     <Image 
         source={{ uri: item.secure_url }}
-        style={{ width, height }}
+        style={{ width, height,borderWidth: 1, borderColor: '#1976d2', }} 
     />
     </View>
     );
