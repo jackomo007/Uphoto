@@ -4,14 +4,17 @@ import { View, StyleSheet, Text, Button } from 'react-native';
 class Comments extends React.Component {
   
   render() {
-    const { navigation } = this.props;
+    const { navigation, item, comment_user } = this.props;
+    var author = "";
+    var comment = "";
+    if(comment_user[0] != undefined){
+      author = comment_user[0][0];
+      comment = comment_user[0][1];
+    }
     return (
       <View style={styles.container}>
-        <Text style={{color: 'white'}}>Comments!</Text>
-        <Button 
-        title='Author'
-        onPress={()=>{navigation.navigate('Author')}}
-        />
+        <Text>{author}</Text>
+        <Text>{ comment }</Text>
       </View>
     );
   }
@@ -22,7 +25,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#283593',
+    backgroundColor: 'silver',
   }
 });
 

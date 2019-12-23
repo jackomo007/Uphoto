@@ -1,7 +1,7 @@
 import { takeEvery, call, select, put, all } from 'redux-saga/effects';
 import { auth, dB } from '../Services/Firebase';
 import CONTANTS from '../Constants';
-import { actionAddPublicationStore, actionAddAuthorsStore, actionAddUserStore, actionSuccessPublicationUploaded, actionErrorPublicationUploaded } from '../Actions';
+import { actionAddPublicationStore, actionAddCommentsStore, actionAddAuthorsStore,  actionAddUserStore, actionSuccessPublicationUploaded, actionErrorPublicationUploaded } from '../Actions';
 
 const registerInFire = values => auth
 .createUserWithEmailAndPassword(values.email, values.password)
@@ -119,6 +119,21 @@ const downloadPublication = () => dB
     }
 );
 
+const downloadComments = key => dB
+.ref('publication-comments/'+key)
+.once('value')
+.then((snapshot)=> {
+    let comments = [];
+        snapshot.forEach((childSnapshot) => {
+            var comment=[];
+            const {key} = childSnapshot;
+            comment[0] = key;
+            comment[1] = childSnapshot.val();
+            comments.push(comment);
+        });
+        return comments;
+    }
+);
 const downloadAuthor = uid => dB
 .ref('users/'+uid)
 .once('value')
@@ -127,11 +142,13 @@ const downloadAuthor = uid => dB
 function* sagaDownloadPublication() {
     try {
         const publications = yield call(downloadPublication);
+        comments= yield all(publications.map(publication => call(downloadComments, publication.key)));
         authors= yield all(publications.map(publication => call(downloadAuthor, publication.uid)));
         user = yield select(state => state.reducerSession);
         yield put(actionAddUserStore(user));
         yield put(actionAddAuthorsStore(authors));
         yield put(actionAddPublicationStore(publications));
+        yield put(actionAddCommentsStore(comments));
     } catch (error) {
         console.log(error);
     }

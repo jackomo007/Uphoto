@@ -61,6 +61,11 @@ export const actionAddUserStore = user => ({
     user
 });
 
+export const actionAddCommentsStore = comments => ({
+    type: CONSTANTS.ADD_COMMENT_STORE,
+    comments
+});
+
 export const actionSuccessPublicationUploaded = () => ({
     type: CONSTANTS.SUCCESS_PUBLICATION_UPLOADED,
 });

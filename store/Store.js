@@ -65,6 +65,15 @@ const reducerAuthorsDownloaded = (state = [], action) => {
     }
 };
 
+const reducerCommentsDownloaded = (state = [], action) => {
+    switch (action.type) {
+        case CONSTANTS.ADD_COMMENT_STORE:
+            return [...state, ...action.comments];
+        default:
+            return state;
+    }
+};
+
 const reducerPublicationUploaded = (state = { status: null }, action) => {
     switch (action.type) {
         case CONSTANTS.SUCCESS_PUBLICATION_UPLOADED:
@@ -83,6 +92,7 @@ const sagaMiddleware = createSagaMiddleware();
 const reducers = combineReducers({
     reducerPublicationUploaded,
     reducerAuthorsDownloaded,
+    reducerCommentsDownloaded,
     reducerPublicationsDownloaded,
     reducerImagePublication,
     reducerImageSingUp,

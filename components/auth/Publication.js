@@ -1,12 +1,24 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button, Image, Dimensions } from 'react-native';
+import { View, StyleSheet, Text, FlatList, Image, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Comments from './Comments';
+
 
 class Publication extends React.Component {
   
   render() {
+    const { navigation, item, author, user, profile, publications, comments } = this.props;
+    var comment_user = [];
+    comments.forEach(comment => {
+      if(comment[0] != undefined){
+        if(comment[0][0] != undefined){
+          if(item.uid === comment[0][0]){
+            comment_user.push(comment[0]);
+          }
+        }
+      }
+    });
     
-    const { navigation, item, author, user, profile } = this.props;
     if(profile === false){
       const {width} = Dimensions.get('window');
       const factor = item.width / width;
@@ -30,8 +42,9 @@ class Publication extends React.Component {
             </View>
             <View style={styles.icons}>
               <Ionicons name="ios-heart-empty" size={30} color="#2196f3" />
-              <Ionicons onPress={()=>{navigation.navigate('Comments')}} style={{ marginLeft:10, }} name="ios-chatbubbles" size={30} color="#2196f3" />
+              <Ionicons style={{ marginLeft:10, }} name="ios-chatbubbles" size={30} color="#2196f3" />
             </View>
+            <Comments item={item} comment_user={comment_user} />
           </View>
         </View>
         );

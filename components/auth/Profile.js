@@ -8,7 +8,7 @@ import Publication from './Publication';
 
 class Profile extends React.Component {
   render() {
-    const { navigation, authors, user } = this.props;
+    const { navigation, authors, user, publications, comments } = this.props;
     authors.forEach(element => {
       if(user.email === element.email){
         author = element;
@@ -30,8 +30,8 @@ class Profile extends React.Component {
         </View>
         <FlatList 
         numColumns={3} 
-        data={this.props.publications}
-        renderItem={({item,index}) => <Publication item={item} author={authors[index]} user={user.email} profile={true}/>}
+        data={publications}
+        renderItem={({item,index}) => <Publication item={item} comments={comments} author={authors[index]} user={user.email} profile={true}/>}
         ItemSeparatorComponent={() => (
           <View style={styles.separator }/>
         )}
@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   publications: state.reducerPublicationsDownloaded,
   authors: state.reducerAuthorsDownloaded,
+  comments: state.reducerCommentsDownloaded,
   user: state.reducerSession,
 });
 

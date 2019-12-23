@@ -8,12 +8,12 @@ class Home extends React.Component {
     this.props.downloadPublication();
   }
   render() {
-    const { navigation, authors,user } = this.props;
+    const { navigation, authors, user, publications, comments } = this.props;
     return (
       <View style={styles.container}>
         <FlatList 
-          data={this.props.publications}
-          renderItem={({item,index}) => <Publication navigation={navigation} item={item} author={authors[index]} user={user.email} profile={false}/>}
+          data={publications}
+          renderItem={({item,index}) => <Publication comments={comments}  navigation={navigation} item={item} author={authors[index]} user={user.email} profile={false}/>}
           ItemSeparatorComponent={() => (
             <View style={styles.separator }/>
           )}
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => ({
   publications: state.reducerPublicationsDownloaded,
   authors: state.reducerAuthorsDownloaded,
+  comments: state.reducerCommentsDownloaded,
   user: state.reducerSession,
 });
 
