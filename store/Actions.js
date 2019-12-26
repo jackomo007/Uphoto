@@ -56,6 +56,14 @@ export const actionAddAuthorsStore = authors => ({
     authors
 });
 
+export const actionAddAllAuthorsStore = () => ({
+    type: CONSTANTS.ADD_ALL_AUTHORS_STORE,
+});
+
+export const actionAddAuthorCommentsStore = author_comments => ({
+    type: CONSTANTS.ADD_ALL_AUTHORS_STORE,
+});
+
 export const actionAddUserStore = user => ({
     type: CONSTANTS.ADD_USER_STORE,
     user

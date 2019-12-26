@@ -1,39 +1,34 @@
 import React from 'react';
-import { View, StyleSheet, Text,  Button, FlatList, } from 'react-native';
+import { View, StyleSheet, Text, Button, FlatList, } from 'react-native';
 import { connect } from 'react-redux';
 import { actionDownloadPublication } from '../../store/Actions';
 import Publication from './Publication';
 class Home extends React.Component {
-  componentDidMount(){
+  componentDidMount() {
     this.props.downloadPublication();
   }
   render() {
-    const { navigation, authors, user, publications, comments } = this.props;
+    const { navigation, authors, user, publications, comments, author_comments } = this.props;
+    let authors_comments = author_comments[0];
+    let autor = authors.map(author => {
+      return author[1];
+    });
     return (
       <View style={styles.container}>
-        <FlatList 
+        <FlatList
           data={publications}
-          renderItem={({item,index}) => <Publication comments={comments}  navigation={navigation} item={item} author={authors[index]} user={user.email} profile={false}/>}
+          renderItem={({ item, index }) => <Publication authors_comments={authors_comments} comments={comments} navigation={navigation} item={item} author={autor[index]} user={user.email} profile={false} />}
           ItemSeparatorComponent={() => (
-            <View style={styles.separator }/>
+            <View style={styles.separator} />
           )}
         />
-        {/* <Text style={{color: 'white'}}>Home!</Text>
-        <Button 
-        title='Author'
-        onPress={()=>{navigation.navigate('Author')}}
-        />
-        <Button 
-        title='Comments'
-        onPress={()=>{navigation.navigate('Comments')}}
-        />*/} 
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  container : {
+  container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -50,6 +45,7 @@ const mapStateToProps = state => ({
   authors: state.reducerAuthorsDownloaded,
   comments: state.reducerCommentsDownloaded,
   user: state.reducerSession,
+  author_comments: state.reducerAuthorsComments,
 });
 
 const mapDispatchToProps = dispatch => ({

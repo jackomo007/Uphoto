@@ -1,20 +1,20 @@
-import {createStore, combineReducers, applyMiddleware} from 'redux';
-import {reducer as form} from 'redux-form';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { reducer as form } from 'redux-form';
 import createSagaMiddleware from 'redux-saga';
 import functionPrimary from './Sagas/Sagas';
 import CONSTANTS from './Constants';
 
-const reducerPrueba = (state=[0], action) => {
+const reducerPrueba = (state = [0], action) => {
     switch (action.type) {
         case 'AUMENTAR_REDUCER_PRUEBA':
             return [...state, 1];
-    
+
         default:
             return state;
     }
 };
 
-const reducerSession = (state=null, action) => {
+const reducerSession = (state = null, action) => {
     switch (action.type) {
         case CONSTANTS.SESSION:
             return action.user;
@@ -25,23 +25,23 @@ const reducerSession = (state=null, action) => {
     }
 };
 
-const reducerImageSingUp = (state= {image: null}, action) => {
+const reducerImageSingUp = (state = { image: null }, action) => {
     switch (action.type) {
         case CONSTANTS.LOAD_IMG_SINGUP:
-            return {image: action.image};
+            return { image: action.image };
         case CONSTANTS.CLEAN_IMG_SINGUP:
-            return {image: null};
+            return { image: null };
         default:
             return state;
     }
 };
 
-const reducerImagePublication = (state= {image: null}, action) => {
+const reducerImagePublication = (state = { image: null }, action) => {
     switch (action.type) {
         case CONSTANTS.LOAD_IMG_PUBLICATION:
-            return {image: action.image};
+            return { image: action.image };
         case CONSTANTS.CLEAN_IMG_PUBLICATION:
-            return {image: null};
+            return { image: null };
         default:
             return state;
     }
@@ -74,14 +74,23 @@ const reducerCommentsDownloaded = (state = [], action) => {
     }
 };
 
+const reducerAuthorsComments = (state = [], action) => {
+    switch (action.type) {
+        case CONSTANTS.ADD_ALL_AUTHORS_STORE:
+            return [...state, author_comments];
+        default:
+            return state;
+    }
+};
+
 const reducerPublicationUploaded = (state = { status: null }, action) => {
     switch (action.type) {
         case CONSTANTS.SUCCESS_PUBLICATION_UPLOADED:
-            return {status: 'SUCCESS'};
+            return { status: 'SUCCESS' };
         case CONSTANTS.ERROR_PUBLICATION_UPLOADED:
-        return {status: 'ERROR'};
+            return { status: 'ERROR' };
         case CONSTANTS.CLEAN_PUBLICATION_UPLOADED:
-        return {status: null};
+            return { status: null };
         default:
             return state;
     }
@@ -94,6 +103,7 @@ const reducers = combineReducers({
     reducerAuthorsDownloaded,
     reducerCommentsDownloaded,
     reducerPublicationsDownloaded,
+    reducerAuthorsComments,
     reducerImagePublication,
     reducerImageSingUp,
     reducerSession,
