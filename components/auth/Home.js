@@ -9,7 +9,8 @@ class Home extends React.Component {
   }
   render() {
     const { navigation, authors, user, publications, comments, author_comments } = this.props;
-    let authors_comments = author_comments[0];
+
+    let authors_comment = author_comments[0];
     let autor = authors.map(author => {
       return author[1];
     });
@@ -17,7 +18,7 @@ class Home extends React.Component {
       <View style={styles.container}>
         <FlatList
           data={publications}
-          renderItem={({ item, index }) => <Publication authors_comments={authors_comments} comments={comments} navigation={navigation} item={item} author={autor[index]} user={user.email} profile={false} />}
+          renderItem={({ item, index }) => <Publication authors_comments={authors_comment} comments={comments} navigation={navigation} item={item} author={autor[index]} user={user.email} profile={false} />}
           ItemSeparatorComponent={() => (
             <View style={styles.separator} />
           )}

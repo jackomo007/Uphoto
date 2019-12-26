@@ -146,6 +146,22 @@ const downloadAuthor = uid => dB
         return authors;
     });
 
+    const downloadCommentsAuthor = () => dB
+    .ref('users/')
+    .once('value')
+    .then((snapshot) => {
+        let autores = [];
+        snapshot.forEach((childSnapshot) => {
+            let authors = []; 
+            const { key } = childSnapshot;
+            authors[0] = key;
+            authors[1] = childSnapshot.val();
+            autores.push(authors);
+        });
+        return autores;
+    }
+    );
+
 function* sagaDownloadPublication() {
     try {
         const publications = yield call(downloadPublication);
@@ -156,17 +172,9 @@ function* sagaDownloadPublication() {
                 comments.push(element);
             }
         });
-        let comentarios = [];
-        if (Array.isArray(comments) && comments.length) {
-            comments.forEach(comentario => {
-                comentarios.push(comentario);
-            });
-        }
-        comments = "";
-        comments = comentarios[0];
 
-        author_comments = yield all(comments.map(comment => call(downloadAuthor, comment[0])));
-
+        author_comments = yield call(downloadCommentsAuthor);
+        
         authors = yield all(publications.map(publication => call(downloadAuthor, publication.uid)));
         user = yield select(state => state.reducerSession);
         yield put(actionAddUserStore(user));

@@ -8,29 +8,16 @@ class Publication extends React.Component {
 
   render() {
     const { navigation, item, authors_comments, author, user, profile, comments } = this.props;
-    console.log(authors_comments);
-    let comentarios = [];
     let { key } = item;
-    var coments = comments[0];
-    let control = 0;
-    if (Array.isArray(coments) && coments.length) {
-      coments.forEach(comentario => {
-        // authors_comments.forEach(element => {
-        //   if (key === comentario[2]) {
-        //     if (comentario[0] === element[0]) {
-        //       // ESTA REPITIENDO ESTA LINEA POR CADA PUBLICACION
-        //       var line = [comentario[2], comentario[1], element[1].name, element[1].photoURL];
-        //       var confirm = comentarios.includes(line);
-        //       if (confirm === false) {
-        //         comentarios[control] = line;
-        //         control++;
-        //       }
-        //     }
-        //   }
-        // });
+    let comentarios = [];
+    if (Array.isArray(comments) && comments.length && Array.isArray(authors_comments) && authors_comments.length) {
+      comments.forEach(element => {
+        if(element[0][2] === key){
+          comentarios.push(element); 
+        }
       });
     }
-
+    
     if (profile === false) {
       const { width } = Dimensions.get('window');
       const factor = item.width / width;
@@ -56,7 +43,13 @@ class Publication extends React.Component {
               <Ionicons name="ios-heart-empty" size={30} color="#2196f3" />
               <Ionicons style={{ marginLeft: 10, }} name="ios-chatbubbles" size={30} color="#2196f3" />
             </View>
-            {/* <Comments item={item} comments={comentarios} /> */}
+            <FlatList
+              data={comentarios}
+              renderItem={({ item }) => <Comments item={item} authors_comments={authors_comments} />}
+              ItemSeparatorComponent={() => (
+                <View style={styles.separator} />
+              )}
+            />
           </View>
         </View>
       );
