@@ -1,4 +1,4 @@
-<p align="center"><img width="550" height ="320" src="https://res.cloudinary.com/dvm6sgg1h/image/upload/v1576845497/jsqehywsp3ykewvol2dj.jpg"></p>
+<p align="center"><img width="564" height ="1004" src="https://res.cloudinary.com/dvm6sgg1h/image/upload/v1576845497/jsqehywsp3ykewvol2dj.jpg"></p>
 
 <p align="center"># Uphoto (APP)</p>
 Instagram Hybrid App React Native
