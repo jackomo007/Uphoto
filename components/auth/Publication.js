@@ -8,7 +8,8 @@ import CreateComment from './CreateComment';
 class Publication extends React.Component {
 
   render() {
-    const { navigation, item, authors_comments, author, user, profile, comments } = this.props;
+    const { item, authors_comments, author, user, profile, comments } = this.props;
+    const {navigate} = this.props.navigation;
     let { key } = item;
     let comentarios = [];
     if (Array.isArray(comments) && comments.length && Array.isArray(authors_comments) && authors_comments.length) {
@@ -42,7 +43,8 @@ class Publication extends React.Component {
             </View>
             <View style={styles.icons}>
               <Ionicons name="ios-heart-empty" size={30} color="#2196f3" />
-              <CreateComment key={key}/>
+              <Ionicons style={{ marginLeft: 10, }} name="ios-chatbubbles" size={30} color="#2196f3" 
+              onPress={() => navigate('CreateComment', {publication_id:key})} />
             </View>
             <FlatList
               data={comentarios}

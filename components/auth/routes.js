@@ -11,6 +11,8 @@ import CommentsScreen from './Comments';
 import TabFollow from './TabFollow';
 import PickFromGalleryScreen from './PickFromGallery';
 import SliderScreen from './Slider';
+import CreateCommentScreen from './CreateComment';
+
 
 const StackHome = createStackNavigator({
   Home: { 
@@ -27,6 +29,9 @@ const StackHome = createStackNavigator({
   },
   Comments: {
       screen: CommentsScreen,
+  },
+  CreateComment: {
+    screen: CreateCommentScreen,
   }
 });
 

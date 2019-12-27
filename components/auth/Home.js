@@ -9,7 +9,6 @@ class Home extends React.Component {
   }
   render() {
     const { navigation, authors, user, publications, comments, author_comments } = this.props;
-
     let authors_comment = author_comments[0];
     let autor = authors.map(author => {
       return author[1];
