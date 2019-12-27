@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text, FlatList, Image, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Comments from './Comments';
+import CreateComment from './CreateComment';
 
 
 class Publication extends React.Component {
@@ -41,7 +42,7 @@ class Publication extends React.Component {
             </View>
             <View style={styles.icons}>
               <Ionicons name="ios-heart-empty" size={30} color="#2196f3" />
-              <Ionicons style={{ marginLeft: 10, }} name="ios-chatbubbles" size={30} color="#2196f3" />
+              <CreateComment key={key}/>
             </View>
             <FlatList
               data={comentarios}

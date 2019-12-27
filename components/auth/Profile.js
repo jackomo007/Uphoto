@@ -8,10 +8,21 @@ import Publication from './Publication';
 
 class Profile extends React.Component {
   render() {
-    const { navigation, authors, user, publications, comments } = this.props;
-    authors.forEach(element => {
-      if(user.email === element.email){
-        author = element;
+    const { navigation, authors, user, publications, comments, author_comments } = this.props;
+    let name ="";
+    let email ="";
+    let photo ="";
+    let authors_comment = author_comments[0];
+    let {uid} = user;
+    let autor = authors.map(author => {
+      return author[1];
+    });
+
+    authors_comment.forEach(author => {
+      if(uid === author[0]){
+        name =    author[1].name;
+        email=  author[1].email;
+        photo=    author[1].photoURL;
       }
     });
     return (
@@ -22,17 +33,17 @@ class Profile extends React.Component {
                       marginTop:5,
                       marginLeft:15,}}>
           <Image
-            source={{ uri: author.photoURL }} 
+            source={{ uri: photo }} 
             style={{ width: 54, height: 54, borderRadius: 28 }}
           />
-          <Text style={{ marginTop:10, marginLeft:5, }}>{author.name}</Text>
+          <Text style={{ marginTop:10, marginLeft:5, }}>{name}</Text>
           <Ionicons onPress={()=>{ auth.signOut();}} name="ios-exit" size={54} color="#2196f3" />
         </View>
         <FlatList 
         numColumns={3} 
         data={publications}
-        renderItem={({item,index}) => <Publication item={item} comments={comments} author={authors[index]} user={user.email} profile={true}/>}
-        ItemSeparatorComponent={() => (
+          renderItem={({ item, index }) => <Publication authors_comments={authors_comment} comments={comments} navigation={navigation} item={item} author={autor[index]} user={user.email} profile={true} />}
+          ItemSeparatorComponent={() => (
           <View style={styles.separator }/>
         )}
         />
@@ -55,6 +66,7 @@ const mapStateToProps = state => ({
   authors: state.reducerAuthorsDownloaded,
   comments: state.reducerCommentsDownloaded,
   user: state.reducerSession,
+  author_comments: state.reducerAuthorsComments,
 });
 
 const mapDispatchToProps = dispatch => ({
