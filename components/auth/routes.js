@@ -12,6 +12,7 @@ import TabFollow from './TabFollow';
 import PickFromGalleryScreen from './PickFromGallery';
 import SliderScreen from './Slider';
 import CreateCommentScreen from './CreateComment';
+import BigPictureScreen from './BigPicture';
 
 
 const StackHome = createStackNavigator({
@@ -136,7 +137,7 @@ StackAdd.navigationOptions = ({ navigation }) => {
 };
 
 const StackProfile = createStackNavigator({
-  Add: { 
+  Profile: { 
     screen:ProfileScreen,
     navigationOptions:{
       header:null
@@ -144,6 +145,9 @@ const StackProfile = createStackNavigator({
   },
   Slider: {
       screen:SliderScreen,
+  },
+  BigPicture: {
+    screen: BigPictureScreen,
   }
 });
 
@@ -164,7 +168,6 @@ export default createAppContainer(createBottomTabNavigator(
   {
     Home: { screen: StackHome },
     Add: { screen: StackAdd },
-    // Follow: { screen: StackFollow },
     Profile: { screen: StackProfile },
     Search: { screen: StackSearch },
   },
@@ -177,8 +180,6 @@ export default createAppContainer(createBottomTabNavigator(
           iconName = `ios-home${focused ? '' : ''}`;
         } else if (routeName === 'Add') {
           iconName = `ios-camera${focused ? '' : ''}`;
-        } else if (routeName === 'Follow') {
-          iconName = `ios-person-add${focused ? '' : ''}`;
         } else if (routeName === 'Profile') {
           iconName = `ios-person${focused ? '' : ''}`;
         } else if (routeName === 'Search') {

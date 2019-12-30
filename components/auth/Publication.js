@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, Dimensions } from 'react-native';
+import { View, StyleSheet, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 
@@ -59,12 +59,16 @@ class Publication extends React.Component {
         const factor = Dimensions.get('window');
         const width = factor.width / 3;
         const height = factor.width / 3;
+        const factor_width = factor.width;
+        const factor_height = factor.height / 2;
         return (
           <View>
-            <Image
-              source={{ uri: item.secure_url }}
-              style={{ width, height }}
-            />
+            <TouchableOpacity onPress={() => navigate('BigPicture', { uri: item.secure_url, height:factor_height, width:factor_width, texto:item.text})}>
+              <Image
+                source={{ uri: item.secure_url }}
+                style={{ width, height }}
+              />
+            </TouchableOpacity>
           </View>
         );
       } else {
