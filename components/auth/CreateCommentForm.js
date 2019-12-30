@@ -8,12 +8,12 @@ const fieldName = (props) => {
             <TextInput
                 placeholder={props.ph}
                 onChangeText={props.input.onChange}
-                value={props.input.name === 'text' ? props.input.value : props.publication_id}
+                value={props.input.value}
                 keyboardType="default"
                 autoCapitalize='none'
                 onBlur={props.input.onBlur}
                 multiline
-                style={props.input.name === 'text' ? styles.textInput : styles.textInputHidden}
+                style={styles.textInput}
             />
             <View style={styles.linea} />
             {props.meta.touched && props.meta.error && <Text style={styles.errors}>{props.meta.error}</Text>}
@@ -23,10 +23,6 @@ const fieldName = (props) => {
 
 const validate = (values, props) => {
     const errors = {};
-
-    if (values.publication_id && values.publication_id.length < 1) {
-        errors.publication_id = 'something is wrong';
-    }
 
     if (values.text && values.text.length > 140) {
         errors.text = 'must be less than 140 characters';
@@ -38,7 +34,6 @@ const validate = (values, props) => {
 const CreateCommentForm = (props) => {
     return (
         <View style={styles.container}>
-            <Field name="publication_id" publication_id={props.publication_id} component={fieldName} />
             <Field name="text" component={fieldName} ph='What do you think about this photo?' />
             <Button
                 title="Comment"
@@ -56,9 +51,6 @@ const styles = StyleSheet.create({
     },
     textInput: {
         marginBottom: 16,
-    },
-    textInputHidden: {
-        color: 'white',
     },
     errors: {
         color: '#bf405f',

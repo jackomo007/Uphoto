@@ -36,14 +36,14 @@ class CreateComment extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    let publication_id = JSON.stringify(navigation.getParam('publication_id'));
+    let publication_id = navigation.getParam('publication_id');
     let comentarios = navigation.getParam('comentarios');
     let authors_comments = navigation.getParam('authors_comments');
     return (
       <View>
         <CreateCommentForm
-          publication_id={publication_id}
           register={(values) => {
+            values.publication_id = {publication_id};
             this.props.uploadComment(values);
           }}
         />

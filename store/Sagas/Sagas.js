@@ -9,8 +9,9 @@ const registerInFire = values => auth
 
 const registerInDB = ({
     uid, email, name, password, photoURL,
-}) =>
-    dB.ref('users/' + uid).set({
+}) => dB
+    .ref('users/' + uid)
+    .set({
         name,
         email,
         password,
@@ -81,15 +82,13 @@ const writeFire = ({ width, height, secure_url, uid }, text = "") => dB
 
 const makeAuthorPublications = ({ uid, key }) => dB
     .ref('author-publications/' + uid)
-    .update({ [key]: true })
+    .push({ [key]: true })
     .then(response => response);
 
-const writeComment = (publication_id, uid, text) => {
-    console.log(publication_id, uid, text);
-}
-// dB.ref('publication-comments/' + publication_id)
-// .update({ [uid]: text })
-// .then(response => response);
+const writeComment = (uid, key, text) => dB
+.ref('publication-comments/' + uid)
+.update({ [key]: text })
+.then(response => response);
 
 function* sagaUploadPublication({ values }) {
     try {
@@ -116,8 +115,8 @@ function* sagaUploadComment({ values }) {
         // throw new Error('Opss... Houston we have a problem');
         const user = yield select(state => state.reducerSession);
         const { uid } = user;
-        console.log(values);
-        // const saveInFire = yield call(writeComment, values.publication_id, uid, values.text);
+        const {publication_id} = values.publication_id;
+        const saveInFire = yield call(writeComment, publication_id, uid, values.text);
         yield put(actionSuccessCommentUploaded());
     } catch (error) {
         console.log(error);
