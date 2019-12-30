@@ -1,25 +1,28 @@
 import React from 'react';
-import { View, StyleSheet, Text, FlatList, Image, Dimensions } from 'react-native';
+import { View, StyleSheet, Text, Image, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import Comments from './Comments';
-import CreateComment from './CreateComment';
 
 
 class Publication extends React.Component {
 
   render() {
     const { item, authors_comments, author, user, profile, comments } = this.props;
-    const {navigate} = this.props.navigation;
+    const { navigate } = this.props.navigation;
     let { key } = item;
     let comentarios = [];
+    let comment_count = 0;
+    let likes_count = 0;
     if (Array.isArray(comments) && comments.length && Array.isArray(authors_comments) && authors_comments.length) {
       comments.forEach(element => {
-        if(element[0][2] === key){
-          comentarios.push(element); 
+        if (element[0][2] === key) {
+          comentarios.push(element);
         }
       });
     }
-    
+    if (Array.isArray(comentarios) && comentarios.length) {
+      comment_count = comentarios[0].length;
+    }
+
     if (profile === false) {
       const { width } = Dimensions.get('window');
       const factor = item.width / width;
@@ -43,16 +46,11 @@ class Publication extends React.Component {
             </View>
             <View style={styles.icons}>
               <Ionicons name="ios-heart-empty" size={30} color="#2196f3" />
-              <Ionicons style={{ marginLeft: 10, }} name="ios-chatbubbles" size={30} color="#2196f3" 
-              onPress={() => navigate('CreateComment', {publication_id:key})} />
+              <Text style={styles.count}>{likes_count > 0 ? likes_count : ""}</Text>
+              <Ionicons style={{ marginLeft: 10, }} name="ios-chatbubbles" size={30} color="#2196f3"
+                onPress={() => navigate('CreateComment', { publication_id: key, comentarios: comentarios, authors_comments: authors_comments })} />
+              <Text style={styles.count}>{comment_count > 0 ? comment_count : ""}</Text>
             </View>
-            <FlatList
-              data={comentarios}
-              renderItem={({ item }) => <Comments item={item} authors_comments={authors_comments} />}
-              ItemSeparatorComponent={() => (
-                <View style={styles.separator} />
-              )}
-            />
           </View>
         </View>
       );
@@ -96,6 +94,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 10,
     marginVertical: 10,
+  },
+  count: {
+    paddingRight: 3,
+    paddingLeft: 3,
   },
   text: {
     paddingHorizontal: 10,

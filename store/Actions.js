@@ -42,6 +42,11 @@ export const actionUploadPublication = values => ({
     values,
 });
 
+export const actionUploadComment = values => ({
+    type: CONSTANTS.UPLOAD_COMMENT,
+    values,
+});
+
 export const actionDownloadPublication = () => ({
     type: CONSTANTS.DOWNLOAD_PUBLICATION,
 });
@@ -84,4 +89,16 @@ export const actionErrorPublicationUploaded = () => ({
 
 export const actionCleanPublicationUploaded = () => ({
     type: CONSTANTS.CLEAN_PUBLICATION_UPLOADED,
+});
+
+export const actionCleanCommentUploaded = () => ({
+    type: CONSTANTS.CLEAN_COMMENT_UPLOADED,
+});
+
+export const actionSuccessCommentUploaded = () => ({
+    type: CONSTANTS.SUCCESS_COMMENT_UPLOADED,
+});
+
+export const actionErrorCommentUploaded = () => ({
+    type: CONSTANTS.ERROR_COMMENT_UPLOADED,
 });

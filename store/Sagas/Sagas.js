@@ -1,7 +1,7 @@
 import { takeEvery, call, select, put, all } from 'redux-saga/effects';
 import { auth, dB } from '../Services/Firebase';
 import CONTANTS from '../Constants';
-import { actionAddPublicationStore, actionAddAuthorCommentsStore, actionAddCommentsStore, actionAddAuthorsStore, actionAddUserStore, actionSuccessPublicationUploaded, actionErrorPublicationUploaded } from '../Actions';
+import { actionSuccessCommentUploaded, actionErrorCommentUploaded, actionAddPublicationStore, actionAddAuthorCommentsStore, actionAddCommentsStore, actionAddAuthorsStore, actionAddUserStore, actionSuccessPublicationUploaded, actionErrorPublicationUploaded } from '../Actions';
 
 const registerInFire = values => auth
     .createUserWithEmailAndPassword(values.email, values.password)
@@ -84,6 +84,13 @@ const makeAuthorPublications = ({ uid, key }) => dB
     .update({ [key]: true })
     .then(response => response);
 
+const writeComment = (publication_id, uid, text) => {
+    console.log(publication_id, uid, text);
+}
+// dB.ref('publication-comments/' + publication_id)
+// .update({ [uid]: text })
+// .then(response => response);
+
 function* sagaUploadPublication({ values }) {
     try {
         // throw new Error('Opss... Houston we have a problem');
@@ -101,6 +108,20 @@ function* sagaUploadPublication({ values }) {
     } catch (error) {
         console.log(error);
         yield put(actionErrorPublicationUploaded());
+    }
+}
+
+function* sagaUploadComment({ values }) {
+    try {
+        // throw new Error('Opss... Houston we have a problem');
+        const user = yield select(state => state.reducerSession);
+        const { uid } = user;
+        console.log(values);
+        // const saveInFire = yield call(writeComment, values.publication_id, uid, values.text);
+        yield put(actionSuccessCommentUploaded());
+    } catch (error) {
+        console.log(error);
+        yield put(actionErrorCommentUploaded());
     }
 }
 
@@ -146,13 +167,13 @@ const downloadAuthor = uid => dB
         return authors;
     });
 
-    const downloadCommentsAuthor = () => dB
+const downloadCommentsAuthor = () => dB
     .ref('users/')
     .once('value')
     .then((snapshot) => {
         let autores = [];
         snapshot.forEach((childSnapshot) => {
-            let authors = []; 
+            let authors = [];
             const { key } = childSnapshot;
             authors[0] = key;
             authors[1] = childSnapshot.val();
@@ -174,7 +195,7 @@ function* sagaDownloadPublication() {
         });
 
         author_comments = yield call(downloadCommentsAuthor);
-        
+
         authors = yield all(publications.map(publication => call(downloadAuthor, publication.uid)));
         user = yield select(state => state.reducerSession);
         yield put(actionAddUserStore(user));
@@ -192,4 +213,5 @@ export default function* functionPrimary() {
     yield takeEvery(CONTANTS.LOGIN, sagaLogin);
     yield takeEvery(CONTANTS.UPLOAD_PUBLICATION, sagaUploadPublication);
     yield takeEvery(CONTANTS.DOWNLOAD_PUBLICATION, sagaDownloadPublication);
+    yield takeEvery(CONTANTS.UPLOAD_COMMENT, sagaUploadComment);
 }

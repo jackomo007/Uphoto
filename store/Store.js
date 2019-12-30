@@ -96,10 +96,24 @@ const reducerPublicationUploaded = (state = { status: null }, action) => {
     }
 };
 
+const reducerCommentUploaded = (state = { status: null }, action) => {
+    switch (action.type) {
+        case CONSTANTS.SUCCESS_COMMENT_UPLOADED:
+            return { status: 'SUCCESS' };
+        case CONSTANTS.ERROR_COMMENT_UPLOADED:
+            return { status: 'ERROR' };
+        case CONSTANTS.CLEAN_COMMENT_UPLOADED:
+            return { status: null };
+        default:
+            return state;
+    }
+};
+
 const sagaMiddleware = createSagaMiddleware();
 
 const reducers = combineReducers({
     reducerPublicationUploaded,
+    reducerCommentUploaded,
     reducerAuthorsDownloaded,
     reducerCommentsDownloaded,
     reducerPublicationsDownloaded,

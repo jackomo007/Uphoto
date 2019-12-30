@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 19515,
-  "expoServerNgrokUrl": "https://uz-ezb.jack0m0.uphoto.exp.direct",
-  "packagerNgrokUrl": "https://packager.uz-ezb.jack0m0.uphoto.exp.direct",
-  "ngrokPid": 19542
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": "https://at-c48.jack0m0.uphoto.exp.direct",
+  "packagerNgrokUrl": "https://packager.at-c48.jack0m0.uphoto.exp.direct",
+  "ngrokPid": 3508
 }
