@@ -6,7 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 class Publication extends React.Component {
 
   render() {
-    const { item, authors_comments, author, user, profile, comments } = this.props;
+    const { item, authors_comments, author, authors, user, profile, comments } = this.props;
     const { navigate } = this.props.navigation;
     let { key } = item;
     let comentarios = [];
@@ -30,11 +30,16 @@ class Publication extends React.Component {
       return (
         <View>
           <View style={styles.header}>
-            <Image
-              source={{ uri: author.photoURL }}
-              style={{ width: 48, height: 48, borderRadius: 24 }}
-            />
-            <Text style={{ marginTop: 10, marginLeft: 5, }}>{author.name}</Text>
+            <TouchableOpacity onPress={() => navigate('PublicationProfile', { user: author, authors:authors })}>
+              <Image
+                source={{ uri: author.photoURL }}
+                style={{ width: 48, height: 48, borderRadius: 24 }}
+              />
+            </TouchableOpacity>
+            <Text
+              style={{ marginTop: 10, marginLeft: 5, }}
+              onPress={() => navigate('PublicationProfile', { user: author })}
+            >{author.name}</Text>
           </View>
           <Image
             source={{ uri: item.secure_url }}
@@ -63,7 +68,7 @@ class Publication extends React.Component {
         const factor_height = factor.height / 2;
         return (
           <View>
-            <TouchableOpacity onPress={() => navigate('BigPicture', { uri: item.secure_url, height:factor_height, width:factor_width, texto:item.text})}>
+            <TouchableOpacity onPress={() => navigate('BigPicture', { uri: item.secure_url, height: factor_height, width: factor_width, texto: item.text })}>
               <Image
                 source={{ uri: item.secure_url }}
                 style={{ width, height }}

@@ -1,17 +1,25 @@
 import React from 'react';
 import { View, StyleSheet, Text, Button, FlatList, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { auth } from '../../store/Services/Firebase';
 import { connect } from 'react-redux';
 import { actionDownloadPublication } from '../../store/Actions';
 import Publication from './Publication';
 
-class Profile extends React.Component {
+class PublicationProfile extends React.Component {
   render() {
-    const { navigation, authors, user, publications, comments, author_comments } = this.props;
     let name = "";
     let email = "";
     let photo = "";
+    const { navigation, authors, publications, comments, author_comments } = this.props;
+    let user = navigation.getParam('user');
+    authors.forEach(autor => {
+      if (autor[1].email === user.email) {
+        name = autor[1].name;
+        email = autor[1].email;
+        photo = autor[1].photoURL;
+      }
+    });
+
     let authors_comment = author_comments[0];
     let { uid } = user;
     let autor = authors.map(author => {
@@ -29,17 +37,17 @@ class Profile extends React.Component {
       <View style={styles.container}>
         <View style={{
           flexDirection: 'row',
-          justifyContent: 'space-around',
+          // justifyContent: 'space-around',
           marginBottom: 10,
           marginTop: 5,
-          marginLeft: 15,
+          marginLeft: 20,
         }}>
+          <Ionicons style={{ alignSelf: 'flex-start', marginRight: 5 }} onPress={() => { navigation.goBack() }} name="ios-arrow-back" size={30} color="#2196f3" />
           <Image
             source={{ uri: photo }}
-            style={{ width: 54, height: 54, borderRadius: 28 }}
+            style={{ width: 54, height: 54, borderRadius: 28, marginLeft: 25, }}
           />
-          <Text style={{ marginTop: 10, marginLeft: 5, }}>{name}</Text>
-          <Ionicons onPress={() => { auth.signOut(); }} name="ios-exit" size={54} color="#2196f3" />
+          <Text style={{ marginTop: 10, marginLeft: 10, }}>{name}</Text>
         </View>
         <FlatList
           numColumns={3}
@@ -67,7 +75,6 @@ const mapStateToProps = state => ({
   publications: state.reducerPublicationsDownloaded,
   authors: state.reducerAuthorsDownloaded,
   comments: state.reducerCommentsDownloaded,
-  user: state.reducerSession,
   author_comments: state.reducerAuthorsComments,
 });
 
@@ -77,4 +84,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(PublicationProfile);

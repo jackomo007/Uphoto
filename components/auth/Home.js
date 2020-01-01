@@ -17,7 +17,7 @@ class Home extends React.Component {
       <View style={styles.container}>
         <FlatList
           data={publications}
-          renderItem={({ item, index }) => <Publication authors_comments={authors_comment} comments={comments} navigation={navigation} item={item} author={autor[index]} user={user.email} profile={false} />}
+          renderItem={({ item, index }) => <Publication authors_comments={authors_comment} authors={authors} comments={comments} navigation={navigation} item={item} author={autor[index]} user={user.email} profile={false} />}
           ItemSeparatorComponent={() => (
             <View style={styles.separator} />
           )}

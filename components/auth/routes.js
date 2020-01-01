@@ -13,26 +13,39 @@ import PickFromGalleryScreen from './PickFromGallery';
 import SliderScreen from './Slider';
 import CreateCommentScreen from './CreateComment';
 import BigPictureScreen from './BigPicture';
+import PublicationProfileScreen from './PublicationProfile';
 
 
 const StackHome = createStackNavigator({
-  Home: { 
-    screen:HomeScreen,
-    navigationOptions:{
-      header:null
+  Home: {
+    screen: HomeScreen,
+    navigationOptions: {
+      header: null
     }
   },
   Author: {
-      screen:AuthorScreen,
+    screen: AuthorScreen,
   },
-  Publication:{
-      screen:PublicationScreen,
+  Publication: {
+    screen: PublicationScreen,
   },
   Comments: {
-      screen: CommentsScreen,
+    screen: CommentsScreen,
   },
   CreateComment: {
     screen: CreateCommentScreen,
+  },
+  PublicationProfile: {
+    screen: PublicationProfileScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  BigPicture: {
+    screen: BigPictureScreen,
+    navigationOptions: {
+      header: null
+    }
   }
 });
 
@@ -41,7 +54,7 @@ StackHome.navigationOptions = ({ navigation }) => {
   let sizeNavigation = navigation.state.routes.length;
   if (navigation.state.index > 0 && (navigation.state.routes[sizeNavigation - 1].routeName === "Comments" || navigation.state.routes[sizeNavigation - 1].routeName === "Selection" || navigation.state.routes[sizeNavigation - 1].routeName === "Slider")) {
     tabBarVisible = false;
-  }else{
+  } else {
     tabBarVisible = true;
   }
   return {
@@ -50,20 +63,20 @@ StackHome.navigationOptions = ({ navigation }) => {
 };
 
 const StackSearch = createStackNavigator({
-  Search: { 
-    screen:SearchScreen,
-    navigationOptions:{
-      header:null
+  Search: {
+    screen: SearchScreen,
+    navigationOptions: {
+      header: null
     }
   },
-  Publication:{
-      screen:PublicationScreen,
+  Publication: {
+    screen: PublicationScreen,
   },
   Author: {
-      screen:AuthorScreen,
+    screen: AuthorScreen,
   },
   Comments: {
-      screen:CommentsScreen,
+    screen: CommentsScreen,
   }
 });
 
@@ -72,7 +85,7 @@ StackSearch.navigationOptions = ({ navigation }) => {
   let sizeNavigation = navigation.state.routes.length;
   if (navigation.state.index > 0 && (navigation.state.routes[sizeNavigation - 1].routeName === "Comments" || navigation.state.routes[sizeNavigation - 1].routeName === "Selection" || navigation.state.routes[sizeNavigation - 1].routeName === "Slider")) {
     tabBarVisible = false;
-  }else{
+  } else {
     tabBarVisible = true;
   }
   return {
@@ -81,20 +94,20 @@ StackSearch.navigationOptions = ({ navigation }) => {
 };
 
 const StackFollow = createStackNavigator({
-  TabFollow: { 
-    screen:TabFollow,
-    navigationOptions:{
-      header:null
+  TabFollow: {
+    screen: TabFollow,
+    navigationOptions: {
+      header: null
     }
   },
   Author: {
-      screen:AuthorScreen,
+    screen: AuthorScreen,
   },
-  Publication:{
-    screen:PublicationScreen,
+  Publication: {
+    screen: PublicationScreen,
   },
   Comments: {
-    screen:CommentsScreen,
+    screen: CommentsScreen,
   }
 });
 
@@ -103,7 +116,7 @@ StackFollow.navigationOptions = ({ navigation }) => {
   let sizeNavigation = navigation.state.routes.length;
   if (navigation.state.index > 0 && (navigation.state.routes[sizeNavigation - 1].routeName === "Comments" || navigation.state.routes[sizeNavigation - 1].routeName === "Selection" || navigation.state.routes[sizeNavigation - 1].routeName === "Slider")) {
     tabBarVisible = false;
-  }else{
+  } else {
     tabBarVisible = true;
   }
   return {
@@ -112,14 +125,14 @@ StackFollow.navigationOptions = ({ navigation }) => {
 };
 
 const StackAdd = createStackNavigator({
-  Add: { 
-    screen:AddScreen,
-    navigationOptions:{
-      header:null
+  Add: {
+    screen: AddScreen,
+    navigationOptions: {
+      header: null
     }
   },
   Selection: {
-      screen:PickFromGalleryScreen,
+    screen: PickFromGalleryScreen,
   }
 });
 
@@ -128,7 +141,7 @@ StackAdd.navigationOptions = ({ navigation }) => {
   let sizeNavigation = navigation.state.routes.length;
   if (navigation.state.index > 0 && (navigation.state.routes[sizeNavigation - 1].routeName === "Comments" || navigation.state.routes[sizeNavigation - 1].routeName === "Selection" || navigation.state.routes[sizeNavigation - 1].routeName === "Slider")) {
     tabBarVisible = false;
-  }else{
+  } else {
     tabBarVisible = true;
   }
   return {
@@ -137,17 +150,20 @@ StackAdd.navigationOptions = ({ navigation }) => {
 };
 
 const StackProfile = createStackNavigator({
-  Profile: { 
-    screen:ProfileScreen,
-    navigationOptions:{
-      header:null
+  Profile: {
+    screen: ProfileScreen,
+    navigationOptions: {
+      header: null
     }
   },
   Slider: {
-      screen:SliderScreen,
+    screen: SliderScreen,
   },
   BigPicture: {
     screen: BigPictureScreen,
+    navigationOptions: {
+      header: null
+    }
   }
 });
 
@@ -156,7 +172,7 @@ StackProfile.navigationOptions = ({ navigation }) => {
   let sizeNavigation = navigation.state.routes.length;
   if (navigation.state.index > 0 && (navigation.state.routes[sizeNavigation - 1].routeName === "Comments" || navigation.state.routes[sizeNavigation - 1].routeName === "Selection" || navigation.state.routes[sizeNavigation - 1].routeName === "Slider")) {
     tabBarVisible = false;
-  }else{
+  } else {
     tabBarVisible = true;
   }
   return {
