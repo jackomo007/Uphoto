@@ -47,6 +47,11 @@ export const actionUploadComment = values => ({
     values,
 });
 
+export const actionLikePublication = values => ({
+    type: CONSTANTS.PUBLICATION_LIKED,
+    values,
+});
+
 export const actionDownloadPublication = () => ({
     type: CONSTANTS.DOWNLOAD_PUBLICATION,
 });
@@ -79,6 +84,11 @@ export const actionAddCommentsStore = comments => ({
     comments
 });
 
+export const actionAddLikesStore = likes => ({
+    type: CONSTANTS.ADD_LIKE_STORE,
+    likes
+});
+
 export const actionSuccessPublicationUploaded = () => ({
     type: CONSTANTS.SUCCESS_PUBLICATION_UPLOADED,
 });
@@ -101,4 +111,16 @@ export const actionSuccessCommentUploaded = () => ({
 
 export const actionErrorCommentUploaded = () => ({
     type: CONSTANTS.ERROR_COMMENT_UPLOADED,
+});
+
+export const actionCleanLikePublication = () => ({
+    type: CONSTANTS.CLEAN_PUBLICATION_LIKED,
+});
+
+export const actionSuccessLikePublication = () => ({
+    type: CONSTANTS.SUCCESS_PUBLICATION_LIKED,
+});
+
+export const actionErrorLikePublication = () => ({
+    type: CONSTANTS.ERROR_PUBLICATION_LIKED,
 });

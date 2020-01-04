@@ -8,8 +8,13 @@ class Home extends React.Component {
     this.props.downloadPublication();
   }
   render() {
-    const { navigation, authors, user, publications, comments, author_comments } = this.props;
+    const { navigation, authors, likes, user, publications, comments, author_comments } = this.props;
+    let user_likes = "";
+    if (Array.isArray(likes) && likes.length) {
+      user_likes = likes[0];
+    }
     let authors_comment = author_comments[0];
+    
     let autor = authors.map(author => {
       return author[1];
     });
@@ -17,7 +22,7 @@ class Home extends React.Component {
       <View style={styles.container}>
         <FlatList
           data={publications}
-          renderItem={({ item, index }) => <Publication authors_comments={authors_comment} authors={authors} comments={comments} navigation={navigation} item={item} author={autor[index]} user={user.email} profile={false} />}
+          renderItem={({ item, index }) => <Publication user_likes={user_likes} authors_comments={authors_comment} authors={authors} comments={comments} navigation={navigation} item={item} author={autor[index]} user={user.email} profile={false} />}
           ItemSeparatorComponent={() => (
             <View style={styles.separator} />
           )}
@@ -46,6 +51,7 @@ const mapStateToProps = state => ({
   comments: state.reducerCommentsDownloaded,
   user: state.reducerSession,
   author_comments: state.reducerAuthorsComments,
+  likes: state.reducerLikes,
 });
 
 const mapDispatchToProps = dispatch => ({

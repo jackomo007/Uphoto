@@ -83,6 +83,15 @@ const reducerAuthorsComments = (state = [], action) => {
     }
 };
 
+const reducerLikes = (state = [], action) => {
+    switch (action.type) {
+        case CONSTANTS.ADD_LIKE_STORE:
+            return [...state, likes];
+        default:
+            return state;
+    }
+};
+
 const reducerPublicationUploaded = (state = { status: null }, action) => {
     switch (action.type) {
         case CONSTANTS.SUCCESS_PUBLICATION_UPLOADED:
@@ -109,9 +118,24 @@ const reducerCommentUploaded = (state = { status: null }, action) => {
     }
 };
 
+const reducerLikePublication = (state = { status: null }, action) => {
+    switch (action.type) {
+        case CONSTANTS.SUCCESS_PUBLICATION_LIKED:
+            return { status: 'SUCCESS' };
+        case CONSTANTS.ERROR_PUBLICATION_LIKED:
+            return { status: 'ERROR' };
+        case CONSTANTS.CLEAN_PUBLICATION_LIKED:
+            return { status: null };
+        default:
+            return state;
+    }
+};
+
 const sagaMiddleware = createSagaMiddleware();
 
 const reducers = combineReducers({
+    reducerLikes,
+    reducerLikePublication,
     reducerPublicationUploaded,
     reducerCommentUploaded,
     reducerAuthorsDownloaded,

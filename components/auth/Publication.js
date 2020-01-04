@@ -1,13 +1,15 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import LikePublication from './LikePublication';
 
 
 class Publication extends React.Component {
 
   render() {
-    const { item, authors_comments, author, authors, user, profile, comments } = this.props;
+    const { item, authors_comments, author, authors, user, profile, comments, user_likes } = this.props;
     const { navigate } = this.props.navigation;
+
     let { key } = item;
     let comentarios = [];
     let comment_count = 0;
@@ -30,7 +32,7 @@ class Publication extends React.Component {
       return (
         <View>
           <View style={styles.header}>
-            <TouchableOpacity onPress={() => navigate('PublicationProfile', { user: author, authors:authors })}>
+            <TouchableOpacity onPress={() => navigate('PublicationProfile', { user: author, authors: authors })}>
               <Image
                 source={{ uri: author.photoURL }}
                 style={{ width: 48, height: 48, borderRadius: 24 }}
@@ -50,7 +52,7 @@ class Publication extends React.Component {
               <Text style={styles.text}>{item.text}</Text>
             </View>
             <View style={styles.icons}>
-              <Ionicons name="ios-heart-empty" size={30} color="#2196f3" />
+              <LikePublication publication_id={key} likes={user_likes}/>
               <Text style={styles.count}>{likes_count > 0 ? likes_count : ""}</Text>
               <Ionicons style={{ marginLeft: 10, }} name="ios-chatbubbles" size={30} color="#2196f3"
                 onPress={() => navigate('CreateComment', { publication_id: key, comentarios: comentarios, authors_comments: authors_comments })} />

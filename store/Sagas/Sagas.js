@@ -1,7 +1,7 @@
 import { takeEvery, call, select, put, all } from 'redux-saga/effects';
 import { auth, dB } from '../Services/Firebase';
 import CONTANTS from '../Constants';
-import { actionSuccessCommentUploaded, actionErrorCommentUploaded, actionAddPublicationStore, actionAddAuthorCommentsStore, actionAddCommentsStore, actionAddAuthorsStore, actionAddUserStore, actionSuccessPublicationUploaded, actionErrorPublicationUploaded } from '../Actions';
+import { actionAddLikesStore, actionSuccessLikePublication, actionErrorLikePublication, actionSuccessCommentUploaded, actionErrorCommentUploaded, actionAddPublicationStore, actionAddAuthorCommentsStore, actionAddCommentsStore, actionAddAuthorsStore, actionAddUserStore, actionSuccessPublicationUploaded, actionErrorPublicationUploaded } from '../Actions';
 
 const registerInFire = values => auth
     .createUserWithEmailAndPassword(values.email, values.password)
@@ -86,9 +86,15 @@ const makeAuthorPublications = ({ uid, key }) => dB
     .then(response => response);
 
 const writeComment = (uid, key, text) => dB
-.ref('publication-comments/' + uid)
-.update({ [key]: text })
-.then(response => response);
+    .ref('publication-comments/' + uid)
+    .update({ [key]: text })
+    .then(response => response);
+
+const authorLike = (uid, key) =>
+    dB
+        .ref('author-like-publications/' + uid)
+        .update({ [key]: true })
+        .then(response => response);
 
 function* sagaUploadPublication({ values }) {
     try {
@@ -110,12 +116,26 @@ function* sagaUploadPublication({ values }) {
     }
 }
 
+function* sagaLikePublication({ values }) {
+    try {
+        // throw new Error('Opss... Houston we have a problem');
+        const user = yield select(state => state.reducerSession);
+        const { uid } = user;
+        const publication_id = values;
+        const makeLike = yield call(authorLike, uid, publication_id);
+        yield put(actionSuccessLikePublication());
+    } catch (error) {
+        console.log(error);
+        yield put(actionErrorLikePublication());
+    }
+}
+
 function* sagaUploadComment({ values }) {
     try {
         // throw new Error('Opss... Houston we have a problem');
         const user = yield select(state => state.reducerSession);
         const { uid } = user;
-        const {publication_id} = values.publication_id;
+        const { publication_id } = values.publication_id;
         const saveInFire = yield call(writeComment, publication_id, uid, values.text);
         yield put(actionSuccessCommentUploaded());
     } catch (error) {
@@ -154,6 +174,18 @@ const downloadComments = key => dB
             comments.push(comment);
         });
         return comments;
+    });
+
+const downloadLikesAuthor = user => dB
+    .ref('author-like-publications/' + user.uid)
+    .once('value')
+    .then((snapshot) => {
+        let likes = [];
+        snapshot.forEach((element) => {
+            const { key } = element;
+            likes.push(key);
+        });
+        return likes;
     });
 
 const downloadAuthor = uid => dB
@@ -197,11 +229,14 @@ function* sagaDownloadPublication() {
 
         authors = yield all(publications.map(publication => call(downloadAuthor, publication.uid)));
         user = yield select(state => state.reducerSession);
+        likes = yield call(downloadLikesAuthor, user);
+
         yield put(actionAddUserStore(user));
         yield put(actionAddAuthorsStore(authors));
         yield put(actionAddPublicationStore(publications));
         yield put(actionAddCommentsStore(comments));
         yield put(actionAddAuthorCommentsStore(author_comments));
+        yield put(actionAddLikesStore(likes));
     } catch (error) {
         console.log(error);
     }
@@ -213,4 +248,5 @@ export default function* functionPrimary() {
     yield takeEvery(CONTANTS.UPLOAD_PUBLICATION, sagaUploadPublication);
     yield takeEvery(CONTANTS.DOWNLOAD_PUBLICATION, sagaDownloadPublication);
     yield takeEvery(CONTANTS.UPLOAD_COMMENT, sagaUploadComment);
+    yield takeEvery(CONTANTS.PUBLICATION_LIKED, sagaLikePublication);
 }
