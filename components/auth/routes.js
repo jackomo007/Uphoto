@@ -5,7 +5,7 @@ import HomeScreen from './Home';
 import AddScreen from './Add';
 import ProfileScreen from './Profile';
 import AuthorScreen from './Profile';
-import SearchScreen from './Search';
+import TabSearchScreen from './TabSearch';
 import PublicationScreen from './Publication';
 import CommentsScreen from './Comments';
 import TabFollow from './TabFollow';
@@ -64,7 +64,7 @@ StackHome.navigationOptions = ({ navigation }) => {
 
 const StackSearch = createStackNavigator({
   Search: {
-    screen: SearchScreen,
+    screen: TabSearchScreen,
     navigationOptions: {
       header: null
     }
