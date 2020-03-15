@@ -13,8 +13,8 @@
 <p align="center"><img width="500" height ="500" src="https://res.cloudinary.com/dvm6sgg1h/image/upload/v1584279085/Uphoto/lprk63yjzz2zdgxykzft.jpg"></p>
 <p align="center">Search</p>
 
-<p align="center"> <b>Uphoto</b> (APP)</p>
-Instagram Hybrid App React Native
+## Uphoto
+React Native + Firebase
 
 ## License
 This software is licensed under the [MIT license](https://opensource.org/licenses/MIT).
